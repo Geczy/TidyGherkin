@@ -1,0 +1,28 @@
+{
+   "app": {
+      "background": {
+         "scripts": [ "js/background.js" ]
+      }
+   },
+   "description": "Keep your Gherkin feature files consistent in layout, take the pain out of table formatting and cucumber step generation",
+   "file_handlers": {
+      "text": {
+         "extensions": [ "feature" ],
+         "types": [ "text/feature" ]
+      }
+   },
+   "icons": {
+      "128": "icons/icon128.png",
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjZW91tkEo/ySkAyAeEjLXSuJiBwgwvTJhjL4+BkTY7W9XWKLTEfSs6NKWFGm/A/yiikHdouBB67BZJrNGd8oGcFARXZQEycH1lAxcpk2yEZJxQeTcRynI0ilKsNhadT8ekZUZ3LNPKH+ChrgdrX5ZsyTCUSkxJtBVC95e6BRPlHD3ISTwrGHfNOPU1u9iHpw4yY3zw7sLun7QHXGZsBaNnXfd43HC8BXsiXQQR/Mr8dTU59/wUxJd8o/Oiy+QG6+PPYKhdfHNoOg6Yk0B8dF9ZTcpfAU1r2V/3nS6gVV43YHCznc19ZGy28A6atQiJz+KeoohesMuN8gAY7GqVmwbwIDAQAB",
+   "manifest_version": 2,
+   "minimum_chrome_version": "31",
+   "name": "Tidy Gherkin",
+   "permissions": [ "syncFileSystem", {
+      "fileSystem": [ "write", "retainEntries", "directory" ]
+   }, "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.4.6"
+}
