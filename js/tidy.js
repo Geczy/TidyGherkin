@@ -1022,7 +1022,7 @@ function generateRubyStepDefs(settings) {
 
 function generateJSStepDefs(settings) {
 
-	var outputStepDefs = "module.exports = function () {\n\n";
+	var outputStepDefs = "defineSupportCode(({ Given, Then, When }) => {\n\n";
 
 	var givenSteps = "";
 	var whenSteps = "";
@@ -1069,7 +1069,7 @@ function generateJSStepDefs(settings) {
 				}
 				break;
 			case "And":
-				var potentialAndStep = generateJSStepDef(stepType, stepBody);
+				var potentialAndStep = generateJSStepDef("Then", stepBody);
 				if(andSteps.indexOf(potentialAndStep.methodName) == -1){
 					andSteps += potentialAndStep.methodWhole;
 				}
@@ -1086,7 +1086,7 @@ function generateJSStepDefs(settings) {
 
 	var stepsText = givenSteps + whenSteps + thenSteps + andSteps + butSteps;
 
-	outputStepDefs += stepsText + "};";
+	outputStepDefs += stepsText + "}";
 	if(stepsText == "") {
 		jsStepDefsCodeMirror.setValue("");
 	} else {
@@ -1460,7 +1460,7 @@ function generateJSStepDef(strStepType, strStepBody){
 		strStepBody = strStepBody.replace(paramRegexp, paramRegexpReplacement);
 		strStepBody = strStepBody.replace(stringRegexp, stringRegexpReplacement);
 
-		var methodArgsString = ", function (";
+		var methodArgsString = ", async (";
 
 		// Process params first
 		for(i=0; i<countParams; i++){
@@ -1474,7 +1474,7 @@ function generateJSStepDef(strStepType, strStepBody){
 				if((transformsCount < totalTransformsToDo) && transformsCount > 0) {
 					methodArgsString += ", ";
 				}
-				methodArgsString += ", callback";
+				methodArgsString += "";
 				break;
 			}
 		}
@@ -1494,7 +1494,7 @@ function generateJSStepDef(strStepType, strStepBody){
 
 				transformsCount ++;
 				if(countStringValues == i+1){
-					methodArgsString += ", callback";
+					methodArgsString += "";
 					break;
 				}
 			}
@@ -1502,20 +1502,20 @@ function generateJSStepDef(strStepType, strStepBody){
 
 		outputStepDef.methodName = generateJSStepDefMethodName(strStepBody);
 		outputStepDef.methodArgs = methodArgsString += ") {\n";
-		outputStepDef.methodBody = "    callback.pending();\n";
-		outputStepDef.methodWhole = "  this." + outputStepDef.stepType + "(" + outputStepDef.methodName
+		outputStepDef.methodBody = "    await client.assert.xyz()\n";
+		outputStepDef.methodWhole = "  " + outputStepDef.stepType + "(" + outputStepDef.methodName
 		                   + outputStepDef.methodArgs
 										   + outputStepDef.methodBody
-										   + "  });\n\n";
+										   + "  })\n\n";
 	}
 	else {
 		outputStepDef.methodName = generateJSStepDefMethodName(strStepBody);
-		outputStepDef.methodArgs = ", function (callback) {\n";
-		outputStepDef.methodBody = "    callback.pending();\n";
-		outputStepDef.methodWhole = "  this." + outputStepDef.stepType + "(" + outputStepDef.methodName
+		outputStepDef.methodArgs = ", async () => {\n";
+		outputStepDef.methodBody = "    await client.assert.xyz()\n";
+		outputStepDef.methodWhole = "  " + outputStepDef.stepType + "(" + outputStepDef.methodName
                              + outputStepDef.methodArgs
 													   + outputStepDef.methodBody
-													   + "  });\n\n"
+													   + "  })\n\n"
 	}
 	return outputStepDef;
 }
