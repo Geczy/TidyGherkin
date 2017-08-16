@@ -1022,7 +1022,7 @@ function generateRubyStepDefs(settings) {
 
 function generateJSStepDefs(settings) {
 
-	var outputStepDefs = "defineSupportCode(({ Given, Then, When }) => {\n\n";
+	var outputStepDefs = "import { client } from 'nightwatch-cucumber'\nimport { defineSupportCode } from 'cucumber'\n\ndefineSupportCode(({ Given, Then, When }) => {\n\n";
 
 	var givenSteps = "";
 	var whenSteps = "";
